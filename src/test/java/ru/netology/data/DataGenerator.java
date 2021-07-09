@@ -5,39 +5,38 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class DataGenerator {
     private Calendar calendar = new GregorianCalendar();
+    private SimpleDateFormat showMonth = new SimpleDateFormat("MM");
+    private SimpleDateFormat showYear = new SimpleDateFormat("yy");
 
     public UserDto getValidCard() {
         Faker user = new Faker(new Locale("en"));
-        String cardNumber = "4444 4444 4444 4441";
-        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
-        String year = Integer.toString(calendar.get(Calendar.YEAR) + 1);
-        String cardHolder = user.name().lastName() + user.name().firstName();
-        String Cvc = "123";
+        String cardNumber = "4444444444444441";
+        String month = showMonth.format(calendar.getTime());
+        calendar.roll(Calendar.YEAR, 1);
+        String year = showYear.format(calendar.getTime());
+        String cardHolder = user.name().lastName() + ConstString.SPACE + user.name().firstName();
+        String cvc = "123";
 
-        return null;
-    }
-
-    public static void main(String[] args) {
-        Calendar calendar = new GregorianCalendar();
-        String c = Integer.toString(calendar.get(Calendar.YEAR) + 1);
-        System.out.println(c);
+        return new UserDto(cardNumber, month, year, cardHolder, cvc);
     }
 
     public UserDto getInvalidCard() {
         Faker user = new Faker(new Locale("en"));
-        String cardNumber = "4444 4444 4444 4442";
-        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
-        String year = Integer.toString(calendar.get(Calendar.YEAR) + 1);
-        String cardHolder = user.name().lastName() + user.name().firstName();
-        String Cvc = "123";
+        String cardNumber = "4444444444444442";
+        String month = showMonth.format(calendar.getTime());
+        calendar.roll(Calendar.YEAR, 1);
+        String year = showYear.format(calendar.getTime());
+        String cardHolder = user.name().lastName() + ConstString.SPACE + user.name().firstName();
+        String cvc = "123";
 
-        return null;
+        return new UserDto(cardNumber, month, year, cardHolder, cvc);
     }
 
     @Data
