@@ -22,7 +22,7 @@ public class DataGenerator {
         calendar.roll(Calendar.YEAR, 1);
         String year = showYear.format(calendar.getTime());
         String cardHolder = user.name().lastName() + ConstString.SPACE + user.name().firstName();
-        String cvc = "123";
+        String cvc = "000";
 
         return new UserDto(cardNumber, month, year, cardHolder, cvc);
     }
@@ -34,7 +34,20 @@ public class DataGenerator {
         calendar.roll(Calendar.YEAR, 1);
         String year = showYear.format(calendar.getTime());
         String cardHolder = user.name().lastName() + ConstString.SPACE + user.name().firstName();
-        String cvc = "123";
+        String cvc = "000";
+
+        return new UserDto(cardNumber, month, year, cardHolder, cvc);
+    }
+
+    public UserDto getInvalidData() {
+        Faker user = new Faker(new Locale("ru"));
+        String cardNumber = "0000000000000000";
+        calendar.roll(Calendar.MONTH, -1);
+        String month = showMonth.format(calendar.getTime());
+        calendar.roll(Calendar.YEAR, -1);
+        String year = showYear.format(calendar.getTime());
+        String cardHolder = user.name().lastName() + ConstString.SPACE + user.name().firstName();
+        String cvc = "000";
 
         return new UserDto(cardNumber, month, year, cardHolder, cvc);
     }

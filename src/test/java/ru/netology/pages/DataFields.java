@@ -15,7 +15,7 @@ public class DataFields {
     private SelenideElement cvc = $(byXpath("//span[text()='CVC/CVV']/following-sibling::span/input"));
     private SelenideElement nextButton = $(byText("Продолжить"));
 
-    public Checks buyTicket(String card, String month, String year, String holder, String cvc) {
+    public Checks enterCardData(String card, String month, String year, String holder, String cvc) {
         this.card.setValue(card);
         this.month.setValue(month);
         this.year.setValue(year);

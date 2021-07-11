@@ -11,11 +11,14 @@ import static com.codeborne.selenide.Selenide.$;
 public class Checks {
     private SelenideElement success = $(".notification_status_ok");
     private SelenideElement denied = $(".notification_status_error");
-    private SelenideElement cardFieldNote = $(byXpath("//span[text()='Номер карты']/following-sibling::span[text()='Неверный формат']"));
-    private SelenideElement monthFieldNote = $(byXpath("//span[text()='Месяц']/following-sibling::span[text()='Неверный формат']"));
-    private SelenideElement yearFieldNote = $(byXpath("//span[text()='Год']/following-sibling::span[text()='Неверный формат']"));
-    private SelenideElement holderFieldNote = $(byXpath("//span[text()='Владелец']/following-sibling::span[text()='Поле обязательно для заполнения']"));
-    private SelenideElement cvcFieldNote = $(byXpath("//span[text()='CVC/CVV']/following-sibling::span[text()='Неверный формат']"));
+    private SelenideElement cardFieldWrongFormat = $(byXpath("//span[text()='Номер карты']/following-sibling::span[text()='Неверный формат']"));
+    private SelenideElement monthFieldWrongFormat = $(byXpath("//span[text()='Месяц']/following-sibling::span[text()='Неверный формат']"));
+    private SelenideElement monthFieldWrongDate = $(byXpath("//span[text()='Месяц']/following-sibling::span[text()='Неверно указан срок действия карты']"));
+    private SelenideElement yearFieldWrongFormat = $(byXpath("//span[text()='Год']/following-sibling::span[text()='Неверный формат']"));
+    private SelenideElement yearFieldWrongDate = $(byXpath("//span[text()='Год']/following-sibling::span[text()='Истёк срок действия карты']"));
+    private SelenideElement holderFieldEmpty = $(byXpath("//span[text()='Владелец']/following-sibling::span[text()='Поле обязательно для заполнения']"));
+    private SelenideElement holderFieldNote = $(byXpath("//span[text()='Владелец']/following-sibling::span[2]"));
+    private SelenideElement cvcFieldWrongFormat = $(byXpath("//span[text()='CVC/CVV']/following-sibling::span[text()='Неверный формат']"));
 
     private SelenideElement card = $(byXpath("//span[text()='Номер карты']/following-sibling::span/input"));
     private SelenideElement month = $(byXpath("//span[text()='Месяц']/following-sibling::span/input"));
@@ -30,24 +33,36 @@ public class Checks {
         denied.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
-    public void checkCardFieldNote() {
-        cardFieldNote.shouldBe(Condition.visible);
+    public void checkCardFieldWrongFormat() {
+        cardFieldWrongFormat.shouldBe(Condition.visible);
     }
 
-    public void checkMonthFieldNote() {
-        monthFieldNote.shouldBe(Condition.visible);
+    public void checkMonthFieldWrongFormat() {
+        monthFieldWrongFormat.shouldBe(Condition.visible);
     }
 
-    public void checkYearFieldNote() {
-        yearFieldNote.shouldBe(Condition.visible);
+    public void checkMonthFieldWrongDate() {
+        monthFieldWrongDate.shouldBe(Condition.visible);
+    }
+
+    public void checkYearFieldWrongFormat() {
+        yearFieldWrongFormat.shouldBe(Condition.visible);
+    }
+
+    public void checkYearFieldWrongDate() {
+        yearFieldWrongDate.shouldBe(Condition.visible);
+    }
+
+    public void checkHolderFieldEmpty() {
+        holderFieldEmpty.shouldBe(Condition.visible);
     }
 
     public void checkHolderFieldNote() {
         holderFieldNote.shouldBe(Condition.visible);
     }
 
-    public void checkCvcFieldNote() {
-        cvcFieldNote.shouldBe(Condition.visible);
+    public void checkCvcFieldWrongFormat() {
+        cvcFieldWrongFormat.shouldBe(Condition.visible);
     }
 
     public void checkCardFieldValue(String value){
@@ -64,5 +79,21 @@ public class Checks {
 
     public void checkCvcFieldValue(String value){
         cvc.shouldHave(Condition.value(value));
+    }
+
+    public void checkCardFieldValueExist(){
+        card.shouldBe(Condition.empty);
+    }
+
+    public void checkMonthFieldValueExist(){
+        month.shouldBe(Condition.empty);
+    }
+
+    public void checkYearFieldValueExist(){
+        year.shouldBe(Condition.empty);
+    }
+
+    public void checkCvcFieldValueExist(){
+        cvc.shouldBe(Condition.empty);
     }
 }
