@@ -9,261 +9,261 @@ import ru.netology.pages.PreviewPage;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.data.ConstString.*;
 
-public class UiBuyTest {
+public class UiCreditTest {
     @BeforeEach
     void setUp() {
         open("http://localhost:8080");
     }
 
     @Test
-    void shouldBuyValidData() {
+    void shouldCreditValidData() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .success();
     }
 
     @Test
-    void shouldBuyBlockCard() {
+    void shouldCreditBlockCard() {
         DataGenerator.UserDto user = new DataGenerator().getInvalidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .denied();
     }
 
     //Тесты поля Карта раздел покупки-----------------------------------------------------------------------------------
     @Test
-    void shouldBuyEmptyCardField() {
+    void shouldCreditEmptyCardField() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(EMPTY, user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkCardFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyInvalidCard() {
+    void shouldCreditInvalidCard() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(SIXTEEN, user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .denied();
     }
 
     @Test
-    void shouldBuyLessThenNeedCardNumber() {
+    void shouldCreditLessThenNeedCardNumber() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(ONE, user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkCardFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyMoreThenNeedCardNumber() {
+    void shouldCreditMoreThenNeedCardNumber() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(SEVENTEEN, user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkCardFieldValue(CARD_NUMBER);
     }
 
     @Test
-    void shouldBuyCharInCardNumber() {
+    void shouldCreditCharInCardNumber() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(VALUE, user.getMonth(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkCardFieldValueExist();
     }
 
     //Тесты поля Месяц раздел покупки-----------------------------------------------------------------------------------
     @Test
-    void shouldBuyEmptyMonthField() {
+    void shouldCreditEmptyMonthField() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), EMPTY, user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkMonthFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyInvalidMonth() {
+    void shouldCreditInvalidMonth() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getYear(), user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkMonthFieldWrongDate();
     }
 
     @Test
-    void shouldBuyLessThenNeedMonth() {
+    void shouldCreditLessThenNeedMonth() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), ONE, user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkMonthFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyMoreThenNeedMonth() {
+    void shouldCreditMoreThenNeedMonth() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), THREE, user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkMonthFieldValue(TWO);
     }
 
     @Test
-    void shouldBuyCharInMonth() {
+    void shouldCreditCharInMonth() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), VALUE, user.getYear(), user.getCardHolder(), user.getCvc())
                 .checkMonthFieldValueExist();
     }
 
     //Тесты поля Год раздел покупки-------------------------------------------------------------------------------------
     @Test
-    void shouldBuyEmptyYearField() {
+    void shouldCreditEmptyYearField() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getYear(), EMPTY, user.getCardHolder(), user.getCvc())
                 .checkYearFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyInvalidYear() {
+    void shouldCreditInvalidYear() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         DataGenerator.UserDto user2 = new DataGenerator().getInvalidData();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user2.getYear(), user.getCardHolder(), user.getCvc())
                 .checkYearFieldWrongDate();
     }
 
     @Test
-    void shouldBuyLessThenNeedYear() {
+    void shouldCreditLessThenNeedYear() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), ONE, user.getCardHolder(), user.getCvc())
                 .checkYearFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyMoreThenNeedYear() {
+    void shouldCreditMoreThenNeedYear() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), THREE, user.getCardHolder(), user.getCvc())
                 .checkYearFieldValue(TWO);
     }
 
     @Test
-    void shouldBuyCharInYear() {
+    void shouldCreditCharInYear() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), VALUE, user.getCardHolder(), user.getCvc())
                 .checkYearFieldValueExist();
     }
 
     //Тесты поля Держатель раздел покупки-------------------------------------------------------------------------------
     @Test
-    void shouldBuyEmptyHolderField() {
+    void shouldCreditEmptyHolderField() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getYear(), user.getYear(), EMPTY, user.getCvc())
                 .checkHolderFieldEmpty();
     }
 
     @Test
-    void shouldBuyInvalidHolder() {
+    void shouldCreditInvalidHolder() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         DataGenerator.UserDto user2 = new DataGenerator().getInvalidData();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user2.getCardHolder(), user.getCvc())
                 .checkHolderFieldNote();
     }
 
     @Test
-    void shouldBuyHolderFieldLessThenNeed() {
+    void shouldCreditHolderFieldLessThenNeed() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), A, user.getCvc())
                 .checkHolderFieldNote();
     }
 
     @Test
-    void shouldBuyHolderFieldMoreThenNeed() {
+    void shouldCreditHolderFieldMoreThenNeed() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
 
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), RandomData.getString(256), user.getCvc())
                 .checkHolderFieldNote();
     }
 
     @Test
-    void shouldBuyHolderFieldNumbers() {
+    void shouldCreditHolderFieldNumbers() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
 
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), SIXTEEN, user.getCvc())
                 .checkHolderFieldNote();
     }
 
     @Test
-    void shouldBuyHolderFieldWhitespace() {
+    void shouldCreditHolderFieldWhitespace() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
 
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), SPACE, user.getCvc())
                 .checkHolderFieldEmpty();
     }
 
     //Тесты поля Держатель раздел покупки-------------------------------------------------------------------------------
     @Test
-    void shouldBuyEmptyCvcField() {
+    void shouldCreditEmptyCvcField() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(),user.getYear(), user.getYear(), user.getCardHolder(), EMPTY)
                 .checkCvcFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyLessThenNeedCvc() {
+    void shouldCreditLessThenNeedCvc() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user.getCardHolder(), ONE)
                 .checkCvcFieldWrongFormat();
     }
 
     @Test
-    void shouldBuyMoreThenNeedCvc() {
+    void shouldCreditMoreThenNeedCvc() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user.getCardHolder(), FOUR)
                 .checkCvcFieldValue(THREE);
     }
 
     @Test
-    void shouldBuyCharInCvc() {
+    void shouldCreditCharInCvc() {
         DataGenerator.UserDto user = new DataGenerator().getValidCard();
         new PreviewPage()
-                .buyTicket()
+                .creditTicket()
                 .enterCardData(user.getCardNumber(), user.getMonth(), user.getYear(), user.getCardHolder(), VALUE)
                 .checkCvcFieldValueExist();
     }

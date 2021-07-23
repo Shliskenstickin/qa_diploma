@@ -13,13 +13,13 @@ public class PreviewPage {
     private SelenideElement buyHeading = $(byText("Оплата по карте"));
     private SelenideElement creditHeading = $(byText("Кредит по данным карты"));
 
-    public DataFields buy() {
+    public DataFields buyTicket() {
         buy.click();
         buyHeading.shouldBe(Condition.visible);
         return new DataFields();
     }
 
-    public DataFields credit() {
+    public DataFields creditTicket() {
         credit.click();
         creditHeading.shouldBe(Condition.visible);
         return new DataFields();
